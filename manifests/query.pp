@@ -44,7 +44,7 @@ define mysql::query (
     command     => "mysql --defaults-file=/root/.my.cnf \
                     ${arg_mysql_user} ${arg_mysql_password} ${arg_mysql_host} \
                     < ${mysql_query_filepath}/mysqlquery-${name}.sql",
-    require     => File["mysqlquery-${name}.sql"],
+    require     => [ File["mysqlquery-${name}.sql"], Class['mysql::password']],
     refreshonly => true,
     subscribe   => File["mysqlquery-${name}.sql"],
     path        => [ '/usr/bin' , '/usr/sbin' ],

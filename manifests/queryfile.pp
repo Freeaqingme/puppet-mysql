@@ -35,7 +35,7 @@ define mysql::queryfile (
     path    => [ '/usr/bin' , '/usr/sbin' , '/bin' , '/sbin' ],
     creates => "${mysql_query_filepath}/mysqlqueryfile-${name}.run",
     unless  => "ls ${mysql_query_filepath}/mysqlqueryfile-${name}.run",
-    require => File[$mysql_query_filepath],
+    require => [ File[ $mysql_query_filepath ], Class['mysql::password'] ],
   }
 
 }

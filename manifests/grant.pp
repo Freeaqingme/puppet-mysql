@@ -39,7 +39,7 @@ define mysql::grant (
       ''      => "mysql -uroot < ${mysql_grant_filepath}/${mysql_grant_file}",
       default => "mysql --defaults-file=/root/.my.cnf -uroot < ${mysql_grant_filepath}/${mysql_grant_file}",
     },
-    require     => Service['mysql'],
+    require     => [ Service['mysql'], Class['mysql::password'] ],
     subscribe   => File[$mysql_grant_file],
     path        => [ '/usr/bin' , '/usr/sbin' ],
     refreshonly => true;
