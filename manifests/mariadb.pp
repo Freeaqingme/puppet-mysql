@@ -38,7 +38,6 @@ class mysql::mariadb (
       if any2bool($firewall) {
         firewall { 'mysql-repo-mariadb':
           destination    => $apt_mirror,
-          destination_v6 => $apt_mirror,
           protocol       => 'tcp',
           port           => 80,
           direction      => 'output',
@@ -46,7 +45,6 @@ class mysql::mariadb (
 
         firewall { 'mysql-repo-mariadb-keyserver':
           destination    => $apt_keyserver,
-          destination_v6 => $apt_keyserver,
           protocol       => 'tcp',
           port           => 11371,
           direction      => 'output',
