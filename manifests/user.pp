@@ -13,7 +13,7 @@ define mysql::user (
       ensure => directory,
       path   => $mysql_grant_filepath,
       owner  => 'root',
-      group  => 'root',
+      group  => $mysql::root_group,
       mode   => '0700',
     }
   }
@@ -25,7 +25,7 @@ define mysql::user (
       ensure  => present,
       mode    => '0600',
       owner   => 'root',
-      group   => 'root',
+      group   => $mysql::root_group,
       path    => "${mysql_grant_filepath}/${mysql_grant_file}",
       content => template('mysql/user.erb'),
   }

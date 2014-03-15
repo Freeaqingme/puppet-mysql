@@ -68,7 +68,7 @@ define mysql::grant (
       ensure => directory,
       path   => $mysql_grant_filepath,
       owner  => root,
-      group  => root,
+      group  => $mysql::root_group,
       mode   => '0700',
     }
   }
@@ -77,7 +77,7 @@ define mysql::grant (
     ensure   => present,
     mode     => '0600',
     owner    => root,
-    group    => root,
+    group    => $mysql::root_group,
     path     => "${mysql_grant_filepath}/${mysql_grant_file}",
     content  => template('mysql/grant.erb'),
   }

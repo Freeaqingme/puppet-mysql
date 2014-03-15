@@ -23,6 +23,10 @@ class mysql::params {
     default => 'mariadb-server',
   }
 
+  $root_group = $::operatingsystem ? {
+    /(?i:FreeBSD)/ => 'wheel',
+    default => 'root',
+  }
   ### Application related parameters
 
   $package = $::operatingsystem ? {
@@ -35,6 +39,7 @@ class mysql::params {
   }
 
   $service = $::operatingsystem ? {
+    /(?i:FreeBSD)/            => 'mysql-server',
     /(?i:Debian|Ubuntu|Mint)/ => 'mysql',
     default                   => 'mysqld',
   }
@@ -74,7 +79,7 @@ class mysql::params {
   }
 
   $config_file_group = $::operatingsystem ? {
-    default => 'root',
+    default => $root_group,
   }
 
   $config_file_init = $::operatingsystem ? {

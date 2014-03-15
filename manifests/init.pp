@@ -224,6 +224,7 @@
 #
 class mysql (
   $root_password       = params_lookup( 'root_password' ),
+  $root_group          = params_lookup( 'root_group' ),
   $password_salt       = params_lookup( 'password_salt' ),
   $my_class            = params_lookup( 'my_class' ),
   $source              = params_lookup( 'source' ),
@@ -473,7 +474,7 @@ class mysql (
       path    => "${settings::vardir}/debug-mysql",
       mode    => '0640',
       owner   => 'root',
-      group   => 'root',
+      group   => $mysql::root_group, 
       content => inline_template('<%= scope.to_hash.reject { |k,v| k.to_s =~ /(uptime.*|path|timestamp|free|.*password.*|.*psk.*|.*key)/ }.to_yaml %>'),
     }
   }

@@ -17,7 +17,7 @@ define mysql::query (
     ensure  => present,
     mode    => '0600',
     owner   => 'root',
-    group   => 'root',
+    group   => $mysql::root_group,
     path    => "${mysql_query_filepath}/mysqlquery-${name}.sql",
     content => template('mysql/query.erb'),
     notify  => Exec["mysqlquery-${name}"],
