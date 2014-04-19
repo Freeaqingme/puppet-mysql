@@ -97,7 +97,6 @@ define mysql::grant (
     command     => $exec_command,
     require     => $exec_require,
     subscribe   => File[$mysql_grant_file],
-    path        => [ '/usr/bin' , '/usr/sbin' ],
     refreshonly => true;
   }
 
