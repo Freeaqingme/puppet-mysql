@@ -57,7 +57,6 @@ define mysql::query (
     require     => $exec_require,
     refreshonly => true,
     subscribe   => File["mysqlquery-${name}.sql"],
-    path        => [ '/usr/bin' , '/usr/sbin' ],
   }
 
 }
