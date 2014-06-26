@@ -8,6 +8,7 @@
 #                             If not set, defaults to == $title
 #                             It supports SQL wildcards (%), ie: 'somedatab%'.
 #                             The special value '*' means 'ALL DATABASES'
+# $mysql_table              - The table to grant rights to. '*' for all tables.
 # $mysql_user               - User to grant the permissions to.
 # $mysql_password           - Plaintext password for the user.
 # $mysql_create_db          - If you want a $mysql_db database created or not.
@@ -25,6 +26,7 @@ define mysql::grant (
   $mysql_user,
   $mysql_password,
   $mysql_db                 = '',
+  $mysql_table              = '*',
   $mysql_db_create_options  = '',
   $mysql_create_db          = true,
   $mysql_privileges         = 'ALL',
@@ -48,6 +50,11 @@ define mysql::grant (
   $real_db = $dbname ? {
     /^(\*|%)$/ => '*',
     default    => "`${dbname}`",
+  }
+
+  $real_table = $mysql_table ? {
+    /^(\*|%)$/ => '*',
+    default    => "`${mysql_table}`",
   }
 
   $nice_mysql_host = regsubst($mysql_host, '/', '_')

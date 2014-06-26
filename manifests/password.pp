@@ -34,7 +34,6 @@ class mysql::password {
 
   exec { 'mysql_backup_root_my_cnf':
     require     => Service['mysql'],
-    path        => '/bin:/sbin:/usr/bin:/usr/sbin',
     unless      => 'diff /root/.my.cnf /root/.my.cnf.backup',
     command     => 'cp /root/.my.cnf /root/.my.cnf.backup ; true',
     before      => File['/root/.my.cnf'],
@@ -44,7 +43,6 @@ class mysql::password {
   exec { 'mysql_root_password':
     subscribe   => File['/root/.my.cnf'],
     require     => Service['mysql'],
-    path        => '/bin:/sbin:/usr/bin:/usr/sbin',
     refreshonly => true,
     command     => "mysqladmin --defaults-file=/root/.my.cnf.backup -uroot password '${mysql::real_root_password}'",
   }
